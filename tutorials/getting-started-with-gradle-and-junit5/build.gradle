@@ -1,0 +1,28 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'io.skippy:skippy-gradle-plugin:0.0.4'
+    }
+}
+
+apply plugin: io.skippy.gradle.SkippyPlugin
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'io.skippy:skippy-junit5:0.0.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+    }
+    useJUnitPlatform()
+}

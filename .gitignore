@@ -41,3 +41,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+tutorials/getting-started-with-gradle-and-junit5/skippy
