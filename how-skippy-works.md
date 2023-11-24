@@ -3,8 +3,8 @@
 # How Skippy Works
 
 Skippy improves test efficiency with a two-pronged approach: 
-- [a powerful build plugin](https://github.com/skippy-io/skippy-gradle/blob/main/skippy-gradle-plugin/README.md#skippy-gradle-plugin) and 
-- [a smart JUnit extension](https://github.com/skippy-io/skippy-junit5/blob/main/README.md#skippy-junit5). 
+- [a powerful build plugin](https://github.com/skippy-io/skippy/blob/main/skippy-gradle/README.md#skippy-gradle-plugin) and
+- [a smart JUnit extension](https://github.com/skippy-io/skippy/tree/main/skippy-junit5#skippy-junit5).
 
 The build plugin harnesses the power of JaCoCo's coverage analysis and ASM's bytecode instrumentation to capture 
 detailed execution data for individual test. In addition, the plugin captures hash for each source and class file
