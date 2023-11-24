@@ -135,16 +135,9 @@ public class StringUtilsTest {
 
 The build file applies the Skippy plugin:
 ```
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'io.skippy:skippy-gradle-plugin:0.0.4'
-    }
+plugins {
+    id 'io.skippy' version '0.0.5'
 }
-
-apply plugin: io.skippy.gradle.SkippyPlugin
 ```
 The SkippyPlugin adds a couple of tasks that we will use throughout the tutorial:
 ```
@@ -166,7 +159,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'io.skippy:skippy-junit5:0.0.4'
+    testImplementation 'io.skippy:skippy-junit5:0.0.5'
 }
 ```
 
