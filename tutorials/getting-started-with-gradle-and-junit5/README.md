@@ -48,7 +48,7 @@ skippyAnalysis
 skippyClean
 ```
 
-Additionally, it declares a dependency to `io.skippy:skippy-junit5` from Maven Central:
+`build.gradle` also declares a dependency to `io.skippy:skippy-junit5` from Maven Central:
 ```
 repositories {
     mavenCentral()
