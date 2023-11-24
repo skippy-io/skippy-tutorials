@@ -36,7 +36,7 @@ plugins {
     id 'io.skippy' version '0.0.5'
 }
 ```
-The SkippyPlugin adds a couple of tasks that we will use throughout the tutorial:
+The plugin adds a couple of tasks that we will use throughout the tutorial:
 ```
 ./gradlew tasks
  
