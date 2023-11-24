@@ -28,6 +28,37 @@ BUILD SUCCESSFUL in 500ms
 
 Let's take a quick look at the codebase.
 
+### The build.gradle File
+
+`build.gradle` applies the Skippy plugin from Gradle's Plugin Portal:
+```
+plugins {
+    id 'io.skippy' version '0.0.5'
+}
+```
+The SkippyPlugin adds a couple of tasks that we will use throughout the tutorial:
+```
+./gradlew tasks
+ 
+...
+
+Skippy tasks
+------------
+skippyAnalysis
+skippyClean
+```
+
+Additionally, it declares a dependency to `io.skippy:skippy-junit5` from Maven Central:
+```
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'io.skippy:skippy-junit5:0.0.5'
+}
+```
+
 ### src/main/java 
 
 This directory contains three classes:
@@ -128,38 +159,6 @@ public class StringUtilsTest {
         assertEquals("hello ", StringUtils.padRight(input, 6));
     }
 
-}
-```
-
-### The build.gradle File
-
-The build file applies the Skippy plugin:
-```
-plugins {
-    id 'io.skippy' version '0.0.5'
-}
-```
-The SkippyPlugin adds a couple of tasks that we will use throughout the tutorial:
-```
-./gradlew tasks
- 
-...
-
-Skippy tasks
-------------
-skippyAnalysis
-skippyClean
-```
-
-The `skippy-junit5` dependency provides the Skippy JUnit 5 extension: 
-
-```
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testImplementation 'io.skippy:skippy-junit5:0.0.5'
 }
 ```
 
