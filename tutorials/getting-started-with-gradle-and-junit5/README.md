@@ -195,7 +195,7 @@ StringUtilsTest > testPadLeft() PASSED
 StringUtilsTest > testPadRight() PASSED
 ```
 
-Skippy did not find a Skippy analysis data to decide whether `LeftPadderTest` or `RightPadderTest` test need to run. 
+Skippy did not find a Skippy analysis data to decide whether `LeftPadderTest` or `RightPadderTest` need to run. 
 In this case, Skippy will always execute skippified tests. 
 
 Also note that there is no Skippy-specific logging for `StringUtilsTest`: It's a non-skippified test.
@@ -250,10 +250,10 @@ in the following classes:
 
 You might wonder: Shouldn't there be coverage for the `TestConstants` class? Yes. But: JaCoCo's analysis is based on the
 execution of instrumented bytecode. Since the Java compiler inlines the value of `TestConstants.HELLO` into 
-`LeftPadderTest`'s class file, JaCoCo has no way to detect that `LeftPadderTest` covers the constant in `TestConstants`. 
+`LeftPadderTest`'s class file, JaCoCo has no way to detect this. 
 
 Don't worry - Skippy got you covered! Skippy combines JaCoCo's dynamic bytecode analysis with  a custom, static bytecode 
-analysis to detect changed class files. To do this, it needs additional information that is stored in  `sourceSnapshot.md5`:
+analysis to detect relevant changes. To do this, it needs additional information that is stored in  `sourceSnapshot.md5`:
 
 ```
 build/classes/java/main/com/example/LeftPadder.class:9U3+WYit7uiiNqA9jplN2A==
@@ -289,14 +289,21 @@ RightPadderTest > testPadLeft() SKIPPED
 
 ```
 
-Skippy detects that both skippified tests can be skipped:
+Skippy compares the current state of the project with the analysis in the `skippy` folder and detects that both 
+skippified tests can be skipped:
 
-- There was no change in any of the skippified tests (compared to the data in the `skippy` folder).
-- There was no change in any of the covered classes (compared to the data in the `skippy` folder).
+- There was no change in any of the skippified tests.
+- There was no change in any of the covered classes.
 
 ## Testing After Modifications
 
-When changes are made, Skippy reassesses which tests to run. Let's perform some experiments.
+When changes are made, Skippy reassesses which tests to run based on it's bytecode based change detection. Reasoning 
+based on the bytecode is powerful: It allows Skippy to distinguish relevant changes (e.g., new or updated instructions)
+from irrelevant ones (e.g., a change in a 
+[LineNumberTable attribute](https://docs.oracle.com/javase/specs/jvms/se17/html/jvms-4.html#jvms-4.7.12) due to the
+addition of a line break somewhere in the source file).
+
+Let's perform some experiments.
 
 ### Experiment 1
 
@@ -317,7 +324,7 @@ Re-run the tests:
 ./gradlew test
 ```
 
-Despite the newly added comment, Skippy detects no significant bytecode changes. `LeftPadderTest` and 
+Despite the newly added comment, Skippy detects no significant changes. `LeftPadderTest` and 
 `RightPadderTest` will be skipped:
 ```
 LeftPadderTest
@@ -328,7 +335,7 @@ RightPadderTest
 DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: Source change in covered class 'com.example.StringUtils' detected. Execution required.
 RightPadderTest > testPadLeft() PASSED
 
-... output for non-skippified tests ...
+...
 ```
 
 ### Experiment 2
@@ -338,14 +345,17 @@ Undo the changes from the previous experiment:
 git stash
 ```
 
-Add a new field to `StringUtils`:
+Comment out the first three lines of `StringUtils#padLeft`:
 
 ```
 class StringUtils {
     
-    String newField = "new";
-    
-    ...
+    static String padLeft(String input, int size) {
+//        if (input.length() < size) {
+//            return padLeft(" " + input, size);
+//        }
+        return input;
+    }
 }
 ```
 
@@ -366,6 +376,14 @@ RightPadderTest > testPadLeft() PASSED
 
 ...
 ```
+
+Note that at this point in time, Skippy executes a tests if the covered class contains a significant bytecode change 
+(e.g., new or updated instructions). The test itself may or may not depend on this change. In the above example, 
+`RightPadderTest` could be skipped as well. 
+
+While we plan to implement more granular change detection in the future, we currently apply the 80/20 rule: Our focus 
+is robustness and simplicity while providing a significant reduction in useless testing for applications that contain 
+large quantities of source files and tests.
 
 ### Experiment 4
 
