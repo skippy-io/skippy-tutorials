@@ -177,11 +177,9 @@ Run the tests:
 The output should resemble:
 
 ```
-LeftPadderTest
 DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: No analysis found. Execution required.
 LeftPadderTest > testPadLeft() PASSED
 
-RightPadderTest
 DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: No analysis found. Execution required.
 RightPadderTest > testPadLeft() PASSED
 
@@ -221,33 +219,33 @@ ls -l skippy
 
 com.example.LeftPadderTest.csv
 com.example.RightPadderTest.csv
-sourceSnapshot.md5
+analyzedFiles.txt
 ```
 
 Let's take a look at `LeftPadderTest.csv`: 
 ```
-...     PACKAGE,        CLASS,              ...     INSTRUCTION_COVERED,    ...
-...     com.example,    TestConstants,      ...     0,                      ...
-...     com.example,    StringUtils,        ...     11,                     ...
-...     com.example,    LeftPadder,         ...     3,                      ...
-...     com.example,    RightPadder,        ...     0,                      ...
-...     com.example,    RightPadderTest,    ...     0,                      ...
-...     com.example,    LeftPadderTest,     ...     11,                     ...
-...     com.example,    StringUtilsTest,    ...     0,                      ...
+...     PACKAGE,        CLASS,              ...     LINES_COVERED,    ...
+...     com.example,    TestConstants,      ...     0,                ...
+...     com.example,    StringUtils,        ...     3,                ...
+...     com.example,    RightPadder,        ...     0,                ...
+...     com.example,    LeftPadder,         ...     1,                ...
+...     com.example,    RightPadderTest,    ...     0,                ...
+...     com.example,    LeftPadderTest,     ...     4,                ...
+...     com.example,    StringUtilsTest,    ...     0,                ...
 ```
 
-The file contains a JaCoCo coverage report for `LeftPadderTest`. According to JaCoCo, `LeftPadderTest` covers instructions 
+The file contains a JaCoCo coverage report for `LeftPadderTest`. According to JaCoCo, `LeftPadderTest` covers lines 
 in the following classes: 
 - `StringUtils`
 - `LeftPadder`
 - `LeftPadderTest`
 
-You might wonder: Shouldn't there be coverage for the `TestConstants` class? Yes. But: JaCoCo's analysis is based on the
-execution of instrumented bytecode. Since the Java compiler inlines the value of `TestConstants.HELLO` into 
+You might wonder: Shouldn't there be line coverage for the `TestConstants` class? Yes. But: JaCoCo's analysis is based 
+on the  execution of instrumented bytecode. Since the Java compiler inlines the value of `TestConstants.HELLO` into 
 `LeftPadderTest`'s class file, JaCoCo has no way to detect this. 
 
 Don't worry - Skippy got you covered! Skippy combines JaCoCo's dynamic bytecode analysis with  a custom, static bytecode 
-analysis to detect relevant changes. To do this, it needs additional information that is stored in  `sourceSnapshot.md5`:
+analysis to detect relevant changes. To do this, it needs additional information that is stored in  `analyzedFiles.txt`:
 
 ```
 build/classes/java/main/com/example/LeftPadder.class:9U3+WYit7uiiNqA9jplN2A==
@@ -365,7 +363,7 @@ RightPadderTest > testPadLeft() PASSED
 ...
 ```
 
-Note that at this point in time, Skippy executes a tests if the covered class contains a significant bytecode change 
+Note that at this point in time, Skippy executes a test if the covered class contains a significant bytecode change 
 (e.g., new or updated instructions). The test itself may or may not depend on this change. In the above example, 
 `RightPadderTest` could be skipped as well. 
 
@@ -402,13 +400,11 @@ Re-run the tests:
 
 Skippy detects the change and runs `LeftPadderTest`again:
 ```
-LeftPadderTest
-    DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: Bytecode change detected. Execution required.
+DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: Bytecode change detected. Execution required.
 LeftPadderTest > testPadLeft() FAILED
     org.opentest4j.AssertionFailedError at LeftPadderTest.java:15
 
-RightPadderTest
-    DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: No changes in test or covered classes detected. Execution skipped.
+DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: No changes in test or covered classes detected. Execution skipped.
 RightPadderTest > testPadLeft() SKIPPED
 
 ...
@@ -440,12 +436,10 @@ Re-run the tests:
 
 Skippy detected the change and re-runs both skippified tests:
 ```
-LeftPadderTest
-    DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: Bytecode change detected. Execution required.
+DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: Bytecode change detected. Execution required.
 LeftPadderTest > testPadLeft() FAILED
 
-RightPadderTest
-    DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: Bytecode change detected. Execution required.
+DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: Bytecode change detected. Execution required.
 RightPadderTest > testPadLeft() FAILED
 
 ...
