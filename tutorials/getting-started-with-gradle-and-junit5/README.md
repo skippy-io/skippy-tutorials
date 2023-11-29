@@ -271,11 +271,9 @@ Re-run the tests:
 
 You should see something like this:
 ```
-LeftPadderTest STANDARD_OUT
 DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: No changes in test or covered classes detected. Execution skipped.
 LeftPadderTest > testPadLeft() SKIPPED
 
-RightPadderTest STANDARD_OUT
 DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: No changes in test or covered classes detected. Execution skipped.
 RightPadderTest > testPadLeft() SKIPPED
 
@@ -321,13 +319,11 @@ Re-run the tests:
 Despite the newly added comment, Skippy detects no significant changes. `LeftPadderTest` and 
 `RightPadderTest` will be skipped:
 ```
-LeftPadderTest
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: Source change in covered class 'com.example.StringUtils' detected. Execution required.
-LeftPadderTest > testPadLeft() PASSED
+DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: No changes in test or covered classes detected. Execution skipped.
+LeftPadderTest > testPadLeft() SKIPPED
 
-RightPadderTest
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: Source change in covered class 'com.example.StringUtils' detected. Execution required.
-RightPadderTest > testPadLeft() PASSED
+DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: No changes in test or covered classes detected. Execution skipped.
+RightPadderTest > testPadLeft() SKIPPED
 
 ...
 ```
@@ -360,12 +356,10 @@ Re-run the tests:
 
 Skippy detects the change and runs the skippified tests again:
 ```
-LeftPadderTest
-    DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: Source change in covered class 'com.example.StringUtils' detected. Execution required.
+DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected. Execution required.
 LeftPadderTest > testPadLeft() PASSED
 
-RightPadderTest
-    DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: Source change in covered class 'com.example.StringUtils' detected. Execution required.
+DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected. Execution required.
 RightPadderTest > testPadLeft() PASSED
 
 ...
