@@ -33,18 +33,22 @@ Let's take a quick look at the codebase.
 `build.gradle` applies the `io.skippy` plugin and adds a dependency to `skippy-junit5`: 
 
 ```
-plugins {
-    id 'io.skippy' version '0.0.5'
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    }
+
+    dependencies {
+        classpath 'io.skippy:skippy-gradle:0.0.6-SNAPSHOT'
+    }
 }
 
-...
+apply plugin: io.skippy.gradle.SkippyPlugin
 
 repositories {
     mavenCentral()
-}
-
-dependencies {
-    testImplementation 'io.skippy:skippy-junit5:0.0.5'
+    maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
 }
 ```
 
