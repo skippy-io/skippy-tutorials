@@ -1,13 +1,23 @@
-plugins {
-    id 'io.skippy' version '0.0.5'
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    }
+
+    dependencies {
+        classpath 'io.skippy:skippy-gradle:0.0.6-SNAPSHOT'
+    }
 }
+
+apply plugin: io.skippy.gradle.SkippyPlugin
 
 repositories {
     mavenCentral()
+    maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
 }
 
 dependencies {
-    testImplementation 'io.skippy:skippy-junit5:0.0.5'
+    testImplementation 'io.skippy:skippy-junit5:0.0.6-SNAPSHOT'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }

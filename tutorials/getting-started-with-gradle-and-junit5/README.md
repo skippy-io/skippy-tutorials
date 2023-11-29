@@ -16,7 +16,7 @@ cd skippy-docs/tutorials/getting-started-with-gradle-and-junit5/
 
 Ensure that the project builds successfully:
 ```
-./gradlew build                      
+./gradlew build clean
 ```
 
 A successful build will display:
@@ -30,26 +30,15 @@ Let's take a quick look at the codebase.
 
 ### The build.gradle File
 
-`build.gradle` applies the Skippy plugin from Gradle's Plugin Portal:
+`build.gradle` applies the `io.skippy` plugin and adds a dependency to `skippy-junit5`: 
+
 ```
 plugins {
     id 'io.skippy' version '0.0.5'
 }
-```
-The plugin adds a couple of tasks that we will use throughout the tutorial:
-```
-./gradlew tasks
- 
+
 ...
 
-Skippy tasks
-------------
-skippyAnalysis
-skippyClean
-```
-
-`build.gradle` also declares a dependency to `io.skippy:skippy-junit5` from Maven Central:
-```
 repositories {
     mavenCentral()
 }
@@ -59,16 +48,34 @@ dependencies {
 }
 ```
 
+The plugin adds a couple of tasks that we will use throughout the tutorial:
+```
+./gradlew tasks
+ 
+...
+
+Skippy tasks
+------------
+skippyAnalyze
+skippyClean
+```
+
+Note: You can play around with those tasks. If you do so, execute
+```
+./gradlew clean skippyClean
+```
+to make sure you start the tutorial from a clean slate. 
+
 ### src/main/java 
 
-This directory contains three classes:
+The main source set contains three classes:
 
 ```
 com
- \-example
-   |-LeftPadder.java
-   |-RightPadder.java
-   \-StringUtils.java
+└─ example
+   ├─ LeftPadder.java
+   ├─ RightPadder.java
+   └─ StringUtils.java
 ```
 
 `StringUtils` is a utility class that provides methods for padding strings:
@@ -107,21 +114,14 @@ class RightPadder {
 
 ### src/test/java
 
-Here, we have three tests and one class that stores a constant that is used throughout the test suite:
+The test source set contains three tests and one class that stores constants:
 ```
 com
- \-example
-   |-LeftPadderTest.java
-   |-RightPadderTest.java
-   |-StringUtilsTest.java
-   \-TestConstants.java
-```
-
-`TestConstants` declares a string constant:
-```
-class TestConstants {
-    static final String HELLO = "hello";
-}
+└─ example
+   ├─ LeftPadderTest.java
+   ├─ RightPadderTest.java
+   ├─ StringUtilsTest.java
+   └─ TestConstants.java
 ```
 
 `LeftPadderTest` and `RightPadderTest` are unit tests for their respective classes:
@@ -142,7 +142,6 @@ public class LeftPadderTest {
 ```
 Note: We will refer to tests that are annotated with `@ExtendWith(Skippy.class)` as skippified tests.
 
-
 `StringUtilsTest` tests the `StringUtil` class and is a standard (e.g., non-skippified) JUnit test:
 ```
 public class StringUtilsTest {
@@ -162,14 +161,20 @@ public class StringUtilsTest {
 }
 ```
 
-## Run The Test Suite
-
-Execute the tests:
+`TestConstants` declares a string constant:
 ```
-./gradlew clean skippyClean test 
+class TestConstants {
+    static final String HELLO = "hello";
+}
 ```
 
-`skippyClean` is used to clear previous analysis data in case you already played around with the `skippyAnalysis` task. 
+
+## Run The Tests
+
+Run the tests:
+```
+./gradlew clean test 
+```
 
 The output should resemble:
 
@@ -183,39 +188,35 @@ DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: No analysis fo
 RightPadderTest > testPadLeft() PASSED
 
 StringUtilsTest > testPadLeft() PASSED
-
 StringUtilsTest > testPadRight() PASSED
 ```
 
-Skippy has no historic execution data to decide whether `LeftPadderTest` or `RightPadderTest` test need to run. 
-In this case, Skippy will always executes skippified tests. Also note that there is no Skippy-specific logging for 
-`StringUtilsTest`: It's a non-skippified test.
+Skippy did not find a Skippy analysis data to decide whether `LeftPadderTest` or `RightPadderTest` test need to run. 
+In this case, Skippy will always execute skippified tests. 
 
-## Execute the skippyAnalysis task
+Also note that there is no Skippy-specific logging for `StringUtilsTest`: It's a non-skippified test.
 
-Run the `skippyAnalysis` task to trigger a Skippy analysis:
+## Run the skippyAnalysis task
+
+Run the `skippyAnalyze` task to trigger a Skippy analysis:
 
 ```
-./gradlew skippyAnalysis
+./gradlew skippyAnalyze
 ```
 
 You should see something like this:
 ```
-./gradlew skippyAnalysis
+./gradlew skippyAnalyze
 
-> Task :skippyCoverage_com.example.LeftPadderTest
+> Task :skippyAnalyze
 Capturing coverage data for com.example.LeftPadderTest in skippy/com.example.LeftPadderTest.csv
-
-> Task :skippyCoverage_com.example.RightPadderTest
 Capturing coverage data for com.example.RightPadderTest in skippy/com.example.RightPadderTest.csv
-
-> Task :skippyAnalysis
-Capturing a snapshot of all source files in skippy/sourceSnapshot.md5
+Creating the Skippy analysis file skippy/analyzedFiles.txt.
 ```
 
 __Note__: You can skip to the next section if you don't care about how Skippy works under the hood.
 
-`skippyAnalysis` generates a bunch of files in the `skippy` folder:
+`skippyAnalyze` generates a bunch of files in the `skippy` folder:
 
 ```
 ls -l skippy
@@ -243,44 +244,29 @@ in the following classes:
 - `LeftPadder`
 - `LeftPadderTest`
 
-You might wonder: Shouldn't there be coverage for `TestConstants`? Yes. But: JaCoCo's analysis is based on the
+You might wonder: Shouldn't there be coverage for the `TestConstants` class? Yes. But: JaCoCo's analysis is based on the
 execution of instrumented bytecode. Since the Java compiler inlines the value of `TestConstants.HELLO` into 
 `LeftPadderTest`'s class file, JaCoCo has no way to detect that `LeftPadderTest` covers the constant in `TestConstants`. 
 
-Don't worry - Skippy got you covered! Skippy combines JaCoCo's dynamic bytecode analysis with 
-a custom, static bytecode analysis to detect changes both in source and bytecode. To do this, it needs 
-additional information that is stored in  `sourceSnapshot.md5`:
+Don't worry - Skippy got you covered! Skippy combines JaCoCo's dynamic bytecode analysis with  a custom, static bytecode 
+analysis to detect changed class files. To do this, it needs additional information that is stored in  `sourceSnapshot.md5`:
 
 ```
-com.example.StringUtils:        ../com/example/StringUtils.java:        ../com/example/StringUtils.class:       OUit8FjiK8bRBHkjssO9+Q==:   TB3Ri7NR47VGzsGKfSF6cg==
-com.example.RightPadder:        ../com/example/RightPadder.java:        ../com/example/RightPadder.class:       lbQRvgnICPwJcg0ObY2wfA==:   FgPLN2IwhX2Y1n7TLYG9aw==
-com.example.LeftPadder:         ../com/example/LeftPadder.java:         ../com/example/LeftPadder.class:        99PUNZm+uo4Rp5feNB5d/g==:   HeDsMUqerZxYhOi8+SyxHA==
-com.example.TestConstants:      ../com/example/TestConstants.java:      ../com/example/TestConstants.class:     nK/HNeYLMeGZk5hlcPS8Yg==:   CjlZNllkdXvp5RozTW9ycQ==
-com.example.LeftPadderTest:     ../com/example/LeftPadderTest.java:     ../com/example/LeftPadderTest.class:    tmeyvGT5uJAMQyQzbqbvyg==:   zEb0x7PQhzYAh00yZX50Wg==
-com.example.RightPadderTest:    ../com/example/RightPadderTest.java:    ../com/example/RightPadderTest.class:   LfOMUnHmz0Gqv48PyG+Arw==:   pfL18c7B6SOZiFB+TsHpaw==
-com.example.StringUtilsTest:    ../com/example/StringUtilsTest.java:    ../com/example/StringUtilsTest.class:   yq8CHRvmLIB5vb/eqkOlIw==:   KJg84+nME0Yh7uBsXwv9Vg==
+build/classes/java/main/com/example/LeftPadder.class:9U3+WYit7uiiNqA9jplN2A==
+build/classes/java/test/com/example/LeftPadderTest.class:3KxzE+CKm6BJ3KetctvnNA==
+build/classes/java/main/com/example/RightPadder.class:ZT0GoiWG8Az5TevH9/JwBg==
+build/classes/java/test/com/example/RightPadderTest.class:naR4eGh3LU+eDNSQXvsIyw==
+build/classes/java/main/com/example/StringUtils.class:4VP9fWGFUJHKIBG47OXZTQ==
+build/classes/java/test/com/example/StringUtilsTest.class:p+N8biKVOm6BltcZkKcC/g==
+build/classes/java/test/com/example/TestConstants.class:3qNbG+sSd1S1OGe0EZ9GPA==
 ```
-
-The file contains 5 properties for each source file (both in the main and test source sets) in your project:
-
-- the fully-qualified class name
-- path of the source file
-- path of the class file
-- MD5 hash of the source file
-- MD5 hash of the class file
-
-In summary, `skippyAnalysis` captures the following data in the `skippy` folder of your project:
-- Test coverage data for each skippified test.
-- For each source file:
-  - the fully qualified class name
-  - the paths of the source and class file
-  - the MD5 hashes of the source and class file
+The file contains hashes for all classes in the project.
 
 Now, let's see what Skippy can do with this data.
 
-## Re-Run The Test Suite
+## Re-Run The Tests
 
-Re-run the test suite:
+Re-run the tests:
 ```
 ./gradlew test                 
 ```
@@ -301,20 +287,23 @@ RightPadderTest > testPadLeft() SKIPPED
 
 Skippy detects that both skippified tests can be skipped:
 
-- There was no source or bytecode change in any of the skippified tests (compared to the data in the `skippy` folder).
-- There was no source or bytecode change in any of the covered classes (compared to the data in the `skippy` folder).
+- There was no change in any of the skippified tests (compared to the data in the `skippy` folder).
+- There was no change in any of the covered classes (compared to the data in the `skippy` folder).
 
 ## Testing After Modifications
 
-When changes are made, Skippy reassesses which tests to run.
+When changes are made, Skippy reassesses which tests to run. Let's perform some experiments.
 
-Modify `StringUtils`:
+### Experiment 1
+
+Add a comment to `StringUtils`:
 
 ```
+/**
+ * New class comment.
+ */
 class StringUtils {
-    
-    String uselessProperty = "useless"; // artificial code change
-    
+        
     ...
 }
 ```
@@ -324,7 +313,8 @@ Re-run the tests:
 ./gradlew test
 ```
 
-Observe that Skippy runs the skippified tests again:
+Despite the newly added comment, Skippy detects no significant bytecode changes. `LeftPadderTest` and 
+`RightPadderTest` will be skipped:
 ```
 LeftPadderTest
 DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: Source change in covered class 'com.example.StringUtils' detected. Execution required.
@@ -337,19 +327,60 @@ RightPadderTest > testPadLeft() PASSED
 ... output for non-skippified tests ...
 ```
 
-Undo your changes in preparation for the next iteration:
+### Experiment 2
+
+Undo the changes from the previous experiment:
 ```
 git stash
 ```
 
-Now, let's see what happens if you change `LeftPadderTest`:
+Add a new field to `StringUtils`:
+
+```
+class StringUtils {
+    
+    String newField = "new";
+    
+    ...
+}
+```
+
+Re-run the tests:
+```
+./gradlew test
+```
+
+Skippy detects the change and runs the skippified tests again:
+```
+LeftPadderTest
+    DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: Source change in covered class 'com.example.StringUtils' detected. Execution required.
+LeftPadderTest > testPadLeft() PASSED
+
+RightPadderTest
+    DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: Source change in covered class 'com.example.StringUtils' detected. Execution required.
+RightPadderTest > testPadLeft() PASSED
+
+...
+```
+
+### Experiment 4
+
+Undo the changes from the previous experiment:
+```
+git stash
+```
+
+Now, let's see what happens if you change the expected value in `LeftPadderTest` from ` hello` to `HELLO`:
 ```
 @ExtendWith(Skippy.class)
 public class LeftPadderTest {
 
-    String uselessProperty = "useless"; // artificial code change
-
-    ...
+    @Test
+    void testPadLeft() {
+        var input = TestConstants.HELLO;
+        // assertEquals(" hello", LeftPadder.padLeft(input, 6));
+        assertEquals(" HELLO", LeftPadder.padLeft(input, 6));
+    }
 
 }
 ```
@@ -359,20 +390,23 @@ Re-run the tests:
 ./gradlew test
 ```
 
-Observe that Skippy only re-runs `LeftPadderTest`:
+Skippy detects the change and runs `LeftPadderTest`again:
 ```
 LeftPadderTest
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: Source change detected. Execution required.
-LeftPadderTest > testPadLeft() PASSED
+    DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: Bytecode change detected. Execution required.
+LeftPadderTest > testPadLeft() FAILED
+    org.opentest4j.AssertionFailedError at LeftPadderTest.java:15
 
 RightPadderTest
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: No changes in test or covered classes detected. Execution skipped.
+    DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: No changes in test or covered classes detected. Execution skipped.
 RightPadderTest > testPadLeft() SKIPPED
 
-... output for non-skippified tests ...
+...
 ```
 
-Undo your changes in preparation for the next iteration:
+### Experiment 4
+
+Undo the changes from the previous experiment:
 ```
 git stash
 ```
@@ -394,17 +428,17 @@ Re-run the tests:
 ./gradlew test
 ```
 
-Skippy detected the bytecode changes and re-runs both skippified tests:
+Skippy detected the change and re-runs both skippified tests:
 ```
 LeftPadderTest
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: Bytecode change detected. Execution required.
+    DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: Bytecode change detected. Execution required.
 LeftPadderTest > testPadLeft() FAILED
 
 RightPadderTest
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: Bytecode change detected. Execution required.
+    DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: Bytecode change detected. Execution required.
 RightPadderTest > testPadLeft() FAILED
 
-... output for non-skippified tests ...
+...
 ```
 
 Congratulations! You've successfully integrated Skippy into your project, ensuring that only necessary tests are run, 
