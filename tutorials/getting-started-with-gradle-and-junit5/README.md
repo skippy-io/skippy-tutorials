@@ -68,7 +68,7 @@ Note: You can play around with those tasks. If you do so, execute
 ```
 ./gradlew clean skippyClean
 ```
-to make sure you start the tutorial from a clean slate. 
+before proceeding with the tutorial. 
 
 ### src/main/java 
 
