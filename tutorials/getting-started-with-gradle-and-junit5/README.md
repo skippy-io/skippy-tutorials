@@ -181,7 +181,7 @@ DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: No analysis fou
 LeftPadderTest > testPadLeft() PASSED
 
 DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: No analysis found. Execution required.
-RightPadderTest > testPadLeft() PASSED
+RightPadderTest > testPadRight() PASSED
 
 StringUtilsTest > testPadLeft() PASSED
 StringUtilsTest > testPadRight() PASSED
@@ -273,16 +273,16 @@ DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: No changes in t
 LeftPadderTest > testPadLeft() SKIPPED
 
 DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: No changes in test or covered classes detected. Execution skipped.
-RightPadderTest > testPadLeft() SKIPPED
+RightPadderTest > testPadRight() SKIPPED
 
 ... output for non-skippified tests ...
 
 ```
 
-Skippy compares the current state of the project with the analysis in the `skippy` folder and detects that both 
-skippified tests can be skipped:
+Skippy compares the current state of the project with the analysis in the `skippy` folder. It detects that both 
+`LeftPadderTest` and `RightPadderTest` can be skipped:
 
-- There was no change in any of the skippified tests.
+- There was no change in either `LeftPadderTest` or `RightPadderTest`.
 - There was no change in any of the covered classes.
 
 ## Testing After Modifications
@@ -321,7 +321,7 @@ DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: No changes in test or c
 LeftPadderTest > testPadLeft() SKIPPED
 
 DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: No changes in test or covered classes detected. Execution skipped.
-RightPadderTest > testPadLeft() SKIPPED
+RightPadderTest > testPadRight() SKIPPED
 
 ...
 ```
@@ -355,10 +355,11 @@ Re-run the tests:
 Skippy detects the change and runs the skippified tests again:
 ```
 DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected. Execution required.
-LeftPadderTest > testPadLeft() PASSED
+expected: < hello> but was: <hello>
+LeftPadderTest > testPadLeft() FAILED
 
 DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: Bytecode change in covered class 'com.example.StringUtils' detected. Execution required.
-RightPadderTest > testPadLeft() PASSED
+RightPadderTest > testPadRight() PASSED
 
 ...
 ```
@@ -401,11 +402,11 @@ Re-run the tests:
 Skippy detects the change and runs `LeftPadderTest`again:
 ```
 DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: Bytecode change detected. Execution required.
+expected: < HELLO> but was: < hello>
 LeftPadderTest > testPadLeft() FAILED
-    org.opentest4j.AssertionFailedError at LeftPadderTest.java:15
 
 DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: No changes in test or covered classes detected. Execution skipped.
-RightPadderTest > testPadLeft() SKIPPED
+RightPadderTest > testPadRight() SKIPPED
 
 ...
 ```
@@ -437,10 +438,12 @@ Re-run the tests:
 Skippy detected the change and re-runs both skippified tests:
 ```
 DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: Bytecode change detected. Execution required.
+expected: < hello> but was: <bonjour>
 LeftPadderTest > testPadLeft() FAILED
 
 DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: Bytecode change detected. Execution required.
-RightPadderTest > testPadLeft() FAILED
+expected: <hello > but was: <bonjour>
+RightPadderTest > testPadRight() FAILED
 
 ...
 ```
