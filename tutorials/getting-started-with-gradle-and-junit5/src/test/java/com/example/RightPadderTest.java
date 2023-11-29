@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RightPadderTest {
 
     @Test
-    void testPadLeft() {
+    void testPadRight() {
         var input = TestConstants.HELLO;
         assertEquals("hello ", RightPadder.padRight(input, 6));
     }
