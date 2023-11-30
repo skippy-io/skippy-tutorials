@@ -187,7 +187,7 @@ StringUtilsTest > testPadLeft() PASSED
 StringUtilsTest > testPadRight() PASSED
 ```
 
-Skippy did not find analysis data to decide whether `LeftPadderTest` or `RightPadderTest` need to be executed.q 
+Skippy did not find analysis data to decide whether `LeftPadderTest` or `RightPadderTest` need to be executed. 
 In this case, Skippy will always execute skippified tests. 
 
 Also note that there is no Skippy-specific logging for `StringUtilsTest`: It's a non-skippified test.
