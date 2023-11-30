@@ -13,14 +13,14 @@ This article provides a high-level overview how both components work together.
 Let's start by discussing what happens when you run `./gradlew skippyAnalyze`.
 
 GitHub links: 
-- [SkippyPlugin.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java)
-- [AnalyzeTask.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/tasks/AnalyzeTask.java)
+- [SkippyPlugin.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java#L37)
+- [AnalyzeTask.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/tasks/AnalyzeTask.java#L46)
 
 ### Step 1: Collect All Class Files
 
 The plugin traverses the output directories of each source set and collects all class files it finds.
 
-GitHub link: [ClassCollector.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/ClassCollector.java)
+GitHub link: [ClassCollector.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/ClassCollector.java#L33)
 
 ### Step 2: Identify Skippified Tests
 
@@ -28,7 +28,7 @@ Using [ASM](https://asm.ow2.io/)'s bytecode analysis capabilities, it then selec
 the class files collected in Step 1. This is accomplished by checking for classes annotated with
 ```@ExtendsWith(Skippy.class)```.
 
-GitHub link: [SkippyJUnit5Detector](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/asm/SkippyJUnit5Detector.java)
+GitHub link: [SkippyJUnit5Detector](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/asm/SkippyJUnit5Detector.java#L31)
 
 ### Step 3: Create JaCoCo Coverage Report For Each Skippified Test
 
@@ -73,7 +73,7 @@ concept: It's a mapping between tests and the classes they cover:
     ]
 }
 ```
-GitHub link: [TestImpactAnalysis.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-core/src/main/java/io/skippy/core/TestImpactAnalysis.java) 
+GitHub link: [TestImpactAnalysis.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-core/src/main/java/io/skippy/core/TestImpactAnalysis.java#L36) 
 
 ### Step 4: Create A Hash For Each Class File
 
@@ -103,7 +103,7 @@ as 'no-ops'.
 
 GitHub links: 
 - [AnalyzeTask.java#createSkippyAnalysisFile](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/tasks/AnalyzeTask.java#L103)
-- [DebugAgnosticHash.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/asm/DebugAgnosticHash.java)
+- [DebugAgnosticHash.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/asm/DebugAgnosticHash.java#L45)
 
 ## Conditional Test Execution: Overview
 
@@ -124,7 +124,7 @@ public class FooTest {
 
 }
 ```
-GitHub link: [Skippy.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-junit5/src/main/java/io/skippy/junit5/Skippy.java)
+GitHub link: [Skippy.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-junit5/src/main/java/io/skippy/junit5/Skippy.java#L29)
 
 At execution time, the extension applies the following algorithm:
 
