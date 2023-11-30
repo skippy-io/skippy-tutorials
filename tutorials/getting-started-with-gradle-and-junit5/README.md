@@ -192,7 +192,7 @@ In this case, Skippy will always execute skippified tests.
 
 Also note that there is no Skippy-specific logging for `StringUtilsTest`: It's a non-skippified test.
 
-## Run the skippyAnalysis task
+## Run the skippyAnalyze task
 
 Run the `skippyAnalyze` task to trigger a Skippy analysis:
 
