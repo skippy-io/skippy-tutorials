@@ -12,7 +12,9 @@ This article provides a high-level overview how both components work together.
 
 Let's start by discussing what happens when you run `./gradlew skippyAnalyze`.
 
-GitHub link: [SkippyPlugin.jave](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java)
+GitHub links: 
+- [SkippyPlugin.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java)
+- [AnalyzeTask.java](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/tasks/AnalyzeTask.java)
 
 ### Step 1: Collect All Class Files
 
