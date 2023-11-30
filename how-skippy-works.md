@@ -3,8 +3,8 @@
 # How Skippy Works
 
 Skippy improves test efficiency with a two-pronged approach: 
-- [a powerful build plugin](https://github.com/skippy-io/skippy/blob/main/skippy-gradle/README.md#skippy-gradle-plugin) and
-- [a smart JUnit extension](https://github.com/skippy-io/skippy/tree/main/skippy-junit5#skippy-junit5).
+- [a powerful build plugin](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java#L37) and
+- [a smart JUnit extension](https://github.com/skippy-io/skippy/blob/d4a5b73076abfd91e66219dea1f4464e9189330e/skippy-junit5/src/main/java/io/skippy/junit5/Skippy.java#L29).
 
 This article provides a high-level overview how both components work together.
 
