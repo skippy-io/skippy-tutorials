@@ -187,7 +187,7 @@ StringUtilsTest > testPadLeft() PASSED
 StringUtilsTest > testPadRight() PASSED
 ```
 
-Skippy did not find a Skippy analysis data to decide whether `LeftPadderTest` or `RightPadderTest` need to run. 
+Skippy did not find analysis data to decide whether `LeftPadderTest` or `RightPadderTest` need to be executed.q 
 In this case, Skippy will always execute skippified tests. 
 
 Also note that there is no Skippy-specific logging for `StringUtilsTest`: It's a non-skippified test.
@@ -234,8 +234,8 @@ Let's take a look at `LeftPadderTest.csv`:
 ...     com.example,    StringUtilsTest,    ...     0,                ...
 ```
 
-The file contains a JaCoCo coverage report for `LeftPadderTest`. According to JaCoCo, `LeftPadderTest` covers lines 
-in the following classes: 
+The file contains a [JaCoCo](https://www.jacoco.org/) coverage report for `LeftPadderTest`. According to JaCoCo, 
+`LeftPadderTest` covers lines in the following classes: 
 - `StringUtils`
 - `LeftPadder`
 - `LeftPadderTest`
