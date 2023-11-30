@@ -12,9 +12,7 @@ This article provides a high-level overview how both components work together.
 
 Let's start by discussing what happens when you run `./gradlew skippyAnalyze`.
 
-GitHub links: 
-- [SkippyPlugin.java](https://github.com/skippy-io/skippy/blob/af4b4c02d0f781117988a22662760cc6a95cfe14/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java#L37)
-- [AnalyzeTask.java](https://github.com/skippy-io/skippy/blob/af4b4c02d0f781117988a22662760cc6a95cfe14/skippy-gradle/src/main/java/io/skippy/gradle/tasks/AnalyzeTask.java#L46)
+GitHub links: [SkippyPlugin.java](https://github.com/skippy-io/skippy/blob/af4b4c02d0f781117988a22662760cc6a95cfe14/skippy-gradle/src/main/java/io/skippy/gradle/SkippyPlugin.java#L37) | [AnalyzeTask.java](https://github.com/skippy-io/skippy/blob/af4b4c02d0f781117988a22662760cc6a95cfe14/skippy-gradle/src/main/java/io/skippy/gradle/tasks/AnalyzeTask.java#L46)
 
 ### Step 1: Collect All Class Files
 
@@ -101,9 +99,7 @@ This allows Skippy to treat certain changes like
 
 as 'no-ops'.
 
-GitHub links: 
-- [AnalyzeTask.java#createAnalyzedFilesTxt](https://github.com/skippy-io/skippy/blob/af4b4c02d0f781117988a22662760cc6a95cfe14/skippy-gradle/src/main/java/io/skippy/gradle/tasks/AnalyzeTask.java#L103C18-L103C40)
-- [DebugAgnosticHash.java](https://github.com/skippy-io/skippy/blob/af4b4c02d0f781117988a22662760cc6a95cfe14/skippy-gradle/src/main/java/io/skippy/gradle/asm/DebugAgnosticHash.java#L45)
+GitHub links: [AnalyzeTask.java#createAnalyzedFilesTxt](https://github.com/skippy-io/skippy/blob/af4b4c02d0f781117988a22662760cc6a95cfe14/skippy-gradle/src/main/java/io/skippy/gradle/tasks/AnalyzeTask.java#L103C18-L103C40) | [DebugAgnosticHash.java](https://github.com/skippy-io/skippy/blob/af4b4c02d0f781117988a22662760cc6a95cfe14/skippy-gradle/src/main/java/io/skippy/gradle/asm/DebugAgnosticHash.java#L45)
 
 ## Conditional Test Execution: Overview
 
