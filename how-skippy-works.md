@@ -34,7 +34,7 @@ Using Gradle's [Tooling API](https://docs.gradle.org/current/userguide/third_par
 the task then creates individual [JaCoCo](https://www.jacoco.org/) coverage reports for the skippified test identified
 in Step 2. Think of it as the programmatic counterpart to the following shell script:
 
-```shell
+```
 ./gradlew test jacocoTestReport --tests "com.example.Test1"
 ./gradlew test jacocoTestReport --tests "com.example.Test2"
 ...
@@ -45,7 +45,7 @@ in Step 2. Think of it as the programmatic counterpart to the following shell sc
 Code: [AnalyzeTask.java#createCoverageReportsForSkippifiedTests](https://github.com/skippy-io/skippy/blob/af4b4c02d0f781117988a22662760cc6a95cfe14/skippy-gradle/src/main/java/io/skippy/gradle/tasks/AnalyzeTask.java#L65)
 
 The individual coverage reports are stored in the `skippy` directory:
-```shell
+```
 ls -l skippy
 
 com.example.Test1.csv

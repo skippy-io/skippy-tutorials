@@ -5,17 +5,17 @@
 ## Setting Up Your Environment
 
 Begin by cloning the skippy-docs repository:
-```shell
+```
 git clone git@github.com:skippy-io/skippy-docs.git
 ```
 
 Then, move into the tutorial directory:
-```shell
+```
 cd skippy-docs/tutorials/getting-started-with-gradle-and-junit5/
 ```
 
 Ensure that the project builds successfully:
-```shell
+```
 ./gradlew build clean
 ```
 
@@ -47,7 +47,7 @@ dependencies {
 ```
 
 The plugin adds a couple of tasks that we will use throughout the tutorial:
-```shell
+```
 ./gradlew tasks
 ```
 Output:
@@ -64,7 +64,7 @@ skippyClean
 ```
 
 Note: You can play around with those tasks. If you do so, execute
-```shell
+```
 ./gradlew clean skippyClean
 ```
 before proceeding with the tutorial. 
@@ -175,7 +175,7 @@ class TestConstants {
 ## Run The Tests
 
 Run the tests:
-```shell
+```
 ./gradlew clean test 
 ```
 
@@ -201,7 +201,7 @@ Also note that there is no Skippy-specific logging for `StringUtilsTest`: It's a
 
 Run the `skippyAnalyze` task to trigger a Skippy analysis:
 
-```shell
+```
 ./gradlew skippyAnalyze
 ```
 
@@ -217,7 +217,7 @@ __Note__: You can skip to the next section if you don't care about how Skippy wo
 
 `skippyAnalyze` generates a bunch of files in the `skippy` folder:
 
-```shell
+```
 ls -l skippy
 ```
 Output:
@@ -268,7 +268,7 @@ Now, let's see what Skippy can do with this data.
 ## Re-Run The Tests
 
 Re-run the tests:
-```shell
+```
 ./gradlew test                 
 ```
 
@@ -315,7 +315,7 @@ class StringUtils {
 ```
 
 Re-run the tests:
-```shell
+```
 ./gradlew test
 ```
 
@@ -334,7 +334,7 @@ RightPadderTest > testPadRight() SKIPPED
 ### Experiment 2
 
 Undo the changes from the previous experiment:
-```shell
+```
 git stash
 ```
 
@@ -353,7 +353,7 @@ class StringUtils {
 ```
 
 Re-run the tests:
-```shell
+```
 ./gradlew test
 ```
 
@@ -380,7 +380,7 @@ large quantities of source files and tests.
 ### Experiment 4
 
 Undo the changes from the previous experiment:
-```shell
+```
 git stash
 ```
 
@@ -400,7 +400,7 @@ public class LeftPadderTest {
 ```
 
 Re-run the tests:
-```shell
+```
 ./gradlew test
 ```
 
@@ -419,7 +419,7 @@ RightPadderTest > testPadRight() SKIPPED
 ### Experiment 4
 
 Undo the changes from the previous experiment:
-```shell
+```
 git stash
 ```
 
@@ -436,7 +436,7 @@ class TestConstants {
 
 Re-run the tests:
 
-```shell
+```
 ./gradlew test
 ```
 
