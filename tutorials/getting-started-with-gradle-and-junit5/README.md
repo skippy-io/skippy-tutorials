@@ -5,23 +5,23 @@
 ## Setting Up Your Environment
 
 Begin by cloning the skippy-docs repository:
-```
+```shell
 git clone git@github.com:skippy-io/skippy-docs.git
 ```
 
 Then, move into the tutorial directory:
-```
+```shell
 cd skippy-docs/tutorials/getting-started-with-gradle-and-junit5/
 ```
 
 Ensure that the project builds successfully:
-```
+```shell
 ./gradlew build clean
 ```
 
 A successful build will display:
 ```
-BUILD SUCCESSFUL in 500ms
+BUILD SUCCESSFUL
 ```
 
 ## Exploring the Codebase
@@ -32,7 +32,7 @@ Let's take a quick look at the codebase.
 
 `build.gradle` applies the `io.skippy` plugin and adds a dependency to `skippy-junit5`: 
 
-```
+```groovy
 plugins {
     id 'io.skippy' version '0.0.6'
 }
@@ -47,19 +47,24 @@ dependencies {
 ```
 
 The plugin adds a couple of tasks that we will use throughout the tutorial:
-```
+```shell
 ./gradlew tasks
+```
+Output:
  
+```
 ...
 
 Skippy tasks
 ------------
 skippyAnalyze
 skippyClean
+
+...
 ```
 
 Note: You can play around with those tasks. If you do so, execute
-```
+```shell
 ./gradlew clean skippyClean
 ```
 before proceeding with the tutorial. 
@@ -77,7 +82,7 @@ com
 ```
 
 `StringUtils` is a utility class that provides methods for padding strings:
-```
+```java
 class StringUtils {
 
     static String padLeft(String input, int size) {
@@ -91,7 +96,7 @@ class StringUtils {
 ```
 
 `LeftPadder` and `RightPadder` utilize `StringUtils` for their functionality: 
-```
+```java
 class LeftPadder {
 
     static String padLeft(String input, int size) {
@@ -100,7 +105,7 @@ class LeftPadder {
 
 }
 ```
-```
+```java
 class RightPadder {
 
     static String padRight(String input, int size) {
@@ -124,7 +129,7 @@ com
 
 `LeftPadderTest` and `RightPadderTest` are unit tests for their respective classes:
 
-```
+```java
 import io.skippy.junit5.Skippy;
 
 @ExtendWith(Skippy.class)
@@ -141,7 +146,7 @@ public class LeftPadderTest {
 Note: We will refer to tests that are annotated with `@ExtendWith(Skippy.class)` as skippified tests.
 
 `StringUtilsTest` tests the `StringUtil` class and is a standard (e.g., non-skippified) JUnit test:
-```
+```java
 public class StringUtilsTest {
 
     @Test
@@ -160,7 +165,7 @@ public class StringUtilsTest {
 ```
 
 `TestConstants` declares a string constant:
-```
+```java
 class TestConstants {
     static final String HELLO = "hello";
 }
@@ -170,13 +175,13 @@ class TestConstants {
 ## Run The Tests
 
 Run the tests:
-```
+```shell
 ./gradlew clean test 
 ```
 
 The output should resemble:
 
-```
+```shell
 DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: No analysis found. Execution required.
 LeftPadderTest > testPadLeft() PASSED
 
@@ -196,14 +201,12 @@ Also note that there is no Skippy-specific logging for `StringUtilsTest`: It's a
 
 Run the `skippyAnalyze` task to trigger a Skippy analysis:
 
-```
+```shell
 ./gradlew skippyAnalyze
 ```
 
 You should see something like this:
 ```
-./gradlew skippyAnalyze
-
 > Task :skippyAnalyze
 Capturing coverage data for com.example.LeftPadderTest in skippy/com.example.LeftPadderTest.csv
 Capturing coverage data for com.example.RightPadderTest in skippy/com.example.RightPadderTest.csv
@@ -214,9 +217,11 @@ __Note__: You can skip to the next section if you don't care about how Skippy wo
 
 `skippyAnalyze` generates a bunch of files in the `skippy` folder:
 
-```
+```shell
 ls -l skippy
-
+```
+Output:
+```
 com.example.LeftPadderTest.csv
 com.example.RightPadderTest.csv
 analyzedFiles.txt
@@ -263,7 +268,7 @@ Now, let's see what Skippy can do with this data.
 ## Re-Run The Tests
 
 Re-run the tests:
-```
+```shell
 ./gradlew test                 
 ```
 
@@ -299,7 +304,7 @@ Let's perform some experiments.
 
 Add a comment to `StringUtils`:
 
-```
+```java
 /**
  * New class comment.
  */
@@ -310,7 +315,7 @@ class StringUtils {
 ```
 
 Re-run the tests:
-```
+```shell
 ./gradlew test
 ```
 
@@ -329,13 +334,13 @@ RightPadderTest > testPadRight() SKIPPED
 ### Experiment 2
 
 Undo the changes from the previous experiment:
-```
+```shell
 git stash
 ```
 
 Comment out the first three lines of `StringUtils#padLeft`:
 
-```
+```java
 class StringUtils {
     
     static String padLeft(String input, int size) {
@@ -348,7 +353,7 @@ class StringUtils {
 ```
 
 Re-run the tests:
-```
+```shell
 ./gradlew test
 ```
 
@@ -375,12 +380,12 @@ large quantities of source files and tests.
 ### Experiment 4
 
 Undo the changes from the previous experiment:
-```
+```shell
 git stash
 ```
 
 Now, let's see what happens if you change the expected value in `LeftPadderTest` from ` hello` to `HELLO`:
-```
+```java
 @ExtendWith(Skippy.class)
 public class LeftPadderTest {
 
@@ -395,7 +400,7 @@ public class LeftPadderTest {
 ```
 
 Re-run the tests:
-```
+```shell
 ./gradlew test
 ```
 
@@ -414,13 +419,13 @@ RightPadderTest > testPadRight() SKIPPED
 ### Experiment 4
 
 Undo the changes from the previous experiment:
-```
+```shell
 git stash
 ```
 
 Lastly, let's see what happens if you change the value of the constant in `TestConstants`:
 
-```
+```java
 class TestConstants {
 
     // static final String HELLO = "hello";
@@ -431,7 +436,7 @@ class TestConstants {
 
 Re-run the tests:
 
-```
+```shell
 ./gradlew test
 ```
 

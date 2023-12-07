@@ -34,18 +34,18 @@ Using Gradle's [Tooling API](https://docs.gradle.org/current/userguide/third_par
 the task then creates individual [JaCoCo](https://www.jacoco.org/) coverage reports for the skippified test identified
 in Step 2. Think of it as the programmatic counterpart to the following shell script:
 
-```
- ./gradlew test jacocoTestReport --tests "com.example.Test1"
- ./gradlew test jacocoTestReport --tests "com.example.Test2"
- ...
- ./gradlew test jacocoTestReport --tests "com.example.Test8"
- ./gradlew test jacocoTestReport --tests "com.example.Test9"
+```console
+./gradlew test jacocoTestReport --tests "com.example.Test1"
+./gradlew test jacocoTestReport --tests "com.example.Test2"
+...
+./gradlew test jacocoTestReport --tests "com.example.Test8"
+./gradlew test jacocoTestReport --tests "com.example.Test9"
 ```
 
 Code: [AnalyzeTask.java#createCoverageReportsForSkippifiedTests](https://github.com/skippy-io/skippy/blob/af4b4c02d0f781117988a22662760cc6a95cfe14/skippy-gradle/src/main/java/io/skippy/gradle/tasks/AnalyzeTask.java#L65)
 
 The individual coverage reports are stored in the `skippy` directory:
-```
+```console
 ls -l skippy
 
 com.example.Test1.csv
@@ -109,7 +109,7 @@ Now, let's take a look how this data is utilized when tests are executed.
 
 The Skippy JUnit 5 extension turns a regular JUnit tests into a skippified test:
 
-```
+```java
 @ExtendWith(Skippy.class)
 public class FooTest {
 
