@@ -181,7 +181,7 @@ Run the tests:
 
 The output should resemble:
 
-```shell
+```
 DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: No analysis found. Execution required.
 LeftPadderTest > testPadLeft() PASSED
 
