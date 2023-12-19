@@ -130,9 +130,9 @@ com
 `LeftPadderTest` and `RightPadderTest` are unit tests for their respective classes:
 
 ```java
-import io.skippy.junit5.Skippy;
+import io.skippy.junit5.Skippified;
 
-@ExtendWith(Skippy.class)
+@Skippified
 public class LeftPadderTest {
 
     @Test
@@ -143,7 +143,7 @@ public class LeftPadderTest {
 
 }
 ```
-Note: We will refer to tests that are annotated with `@ExtendWith(Skippy.class)` as skippified tests.
+Note: We will refer to tests that are annotated with `@Skippified` as skippified tests.
 
 `StringUtilsTest` tests the `StringUtil` class and is a standard (e.g., non-skippified) JUnit test:
 ```java
@@ -182,18 +182,18 @@ Run the tests:
 The output should resemble:
 
 ```
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.LeftPadderTest: No analysis found. Execution required.
+DEBUG i.s.c.SkippyAnalysis - com.example.LeftPadderTest: No coverage data found: Execution required
 LeftPadderTest > testPadLeft() PASSED
 
-DEBUG i.s.c.m.SkippyAnalysisResult - com.example.RightPadderTest: No analysis found. Execution required.
+DEBUG i.s.c.SkippyAnalysis - com.example.RightPadderTest: No coverage data found: Execution required
 RightPadderTest > testPadRight() PASSED
 
 StringUtilsTest > testPadLeft() PASSED
 StringUtilsTest > testPadRight() PASSED
 ```
 
-Skippy did not find analysis data to decide whether `LeftPadderTest` or `RightPadderTest` need to be executed. 
-In this case, Skippy will always execute skippified tests. 
+Skippy did not find data in the skippy folder to decide whether `LeftPadderTest` or `RightPadderTest` need to be 
+executed.  In this case, Skippy will always execute skippified tests. 
 
 Also note that there is no Skippy-specific logging for `StringUtilsTest`: It's a non-skippified test.
 
