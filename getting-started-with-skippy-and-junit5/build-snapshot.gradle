@@ -4,8 +4,12 @@ buildscript {
         maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
     }
     dependencies {
-        classpath 'io.skippy:skippy-gradle:0.0.10-SNAPSHOT'
+        classpath 'io.skippy:skippy-gradle:0.0.12-SNAPSHOT'
     }
+}
+
+plugins {
+    id 'java'
 }
 
 apply plugin: io.skippy.gradle.SkippyPlugin
@@ -16,13 +20,12 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'io.skippy:skippy-junit5:0.0.10-SNAPSHOT'
+    testImplementation 'io.skippy:skippy-junit5:0.0.12-SNAPSHOT'
 }
 
 test {
     testLogging {
         events "passed", "skipped", "failed"
-        showStandardStreams = true
         exceptionFormat 'FULL'
     }
     useJUnitPlatform()
