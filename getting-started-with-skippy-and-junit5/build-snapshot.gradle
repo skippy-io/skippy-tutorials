@@ -4,7 +4,7 @@ buildscript {
         maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
     }
     dependencies {
-        classpath 'io.skippy:skippy-gradle:0.0.14-SNAPSHOT'
+        classpath 'io.skippy:skippy-gradle:0.0.15-SNAPSHOT'
     }
 }
 
@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'io.skippy:skippy-junit5:0.0.14-SNAPSHOT'
+    testImplementation 'io.skippy:skippy-junit5:0.0.15-SNAPSHOT'
 }
 
 test {

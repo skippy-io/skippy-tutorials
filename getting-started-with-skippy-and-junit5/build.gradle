@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'io.skippy' version '0.0.13'
+    id 'io.skippy' version '0.0.14'
 }
 
 repositories {
@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'io.skippy:skippy-junit5:0.0.13'
+    testImplementation 'io.skippy:skippy-junit5:0.0.14'
 }
 
 test {
