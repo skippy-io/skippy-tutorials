@@ -1,6 +1,6 @@
 # skippy-tutorials
 
-Sample project used by the the introductory tutorials for Gradle and Maven:
+Sample project for the introductory tutorials for Gradle and Maven:
 - [Getting Started with Skippy, Gradle & JUnit 5](https://www.skippy.io/tutorials/skippy-gradle-junit5)
 - [Getting Started with Skippy, Maven & JUnit 5](https://www.skippy.io/tutorials/skippy-maven-junit5)
 
