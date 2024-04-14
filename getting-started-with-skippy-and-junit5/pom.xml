@@ -20,7 +20,7 @@
     <dependency>
       <groupId>io.skippy</groupId>
       <artifactId>skippy-junit5</artifactId>
-      <version>0.0.17</version>
+      <version>0.0.19</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -30,7 +30,7 @@
       <plugin>
         <groupId>io.skippy</groupId>
         <artifactId>skippy-maven</artifactId>
-        <version>0.0.17</version>
+        <version>0.0.19</version>
         <executions>
           <execution>
             <goals>
