@@ -1,0 +1,44 @@
+{
+    "id": "C6687BFB83C02BCE3BA3A6ECE9D96356",
+    "classes": {
+		"0": {
+			"name": "com.example.LeftPadder",
+			"path": "com/example/LeftPadder.class",
+			"outputFolder": "build/classes/java/main",
+			"hash": "8E994DD8"
+		},
+		"1": {
+			"name": "com.example.LeftPadderTest",
+			"path": "com/example/LeftPadderTest.class",
+			"outputFolder": "build/classes/java/test",
+			"hash": "D8883E19"
+		},
+		"2": {
+			"name": "com.example.RightPadder",
+			"path": "com/example/RightPadder.class",
+			"outputFolder": "build/classes/java/main",
+			"hash": "F7F27006"
+		},
+		"3": {
+			"name": "com.example.RightPadderTest",
+			"path": "com/example/RightPadderTest.class",
+			"outputFolder": "build/classes/java/test",
+			"hash": "CBAFC468"
+		},
+		"4": {
+			"name": "com.example.StringUtils",
+			"path": "com/example/StringUtils.class",
+			"outputFolder": "build/classes/java/main",
+			"hash": "ECE5D94D"
+		},
+		"5": {
+			"name": "com.example.TestConstants",
+			"path": "com/example/TestConstants.class",
+			"outputFolder": "build/classes/java/test",
+			"hash": "119F463C"
+		}
+	},
+    "tests": [
+
+    ]
+}

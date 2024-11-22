@@ -1,15 +1,13 @@
 package com.example;
 
-import io.skippy.junit5.PredictWithSkippy;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-@PredictWithSkippy
 public class RightPadderTest {
 
     @Test
-    void testPadRight() {
+    public void testPadRight() {
         var input = TestConstants.HELLO;
         assertEquals("hello ", RightPadder.padRight(input, 6));
     }
