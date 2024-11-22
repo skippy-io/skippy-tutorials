@@ -1,3 +1,4 @@
 rootProject.name = 'skippy-tutorials'
 
+include ':getting-started-with-skippy-and-junit4'
 include ':getting-started-with-skippy-and-junit5'

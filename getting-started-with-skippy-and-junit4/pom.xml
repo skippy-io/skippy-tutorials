@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
       <groupId>io.skippy</groupId>
-      <artifactId>skippy-junit5</artifactId>
+      <artifactId>skippy-junit4</artifactId>
       <version>0.0.24</version>
       <scope>test</scope>
     </dependency>
